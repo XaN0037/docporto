@@ -83,29 +83,29 @@ WSGI_APPLICATION = 'src.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
-
-
-
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'django.db.backends.' + os.getenv('DB_ENGINE', "postgresql_psycopg2"),
-#         'NAME': os.getenv('DB_NAME', "basittodb"),
-#         'USER': os.getenv('DB_USER', "xan"),
-#         'PASSWORD': os.getenv('PASS', "Xan0037"),
-#         'HOST': os.getenv('DB_HOST', "localhost"),
-#         'PORT': os.getenv('DB_HOST', "5432"),
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
 
-# db_from_env = dj_database_url.config(conn_max_age=600,)
-#
-# # DATABASES['default'].update(db_from_env)
+
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.' + os.getenv('DB_ENGINE', "postgresql_psycopg2"),
+        'NAME': os.getenv('DB_NAME', "d8h18odtp96rn6"),
+        'USER': os.getenv('DB_USER', "cowcpqpjxqprvo"),
+        'PASSWORD': os.getenv('PASS', "80ca2328b848b1fd16815fbf05e48ef6b75a79492bda8d3ceaa3218129d26e63"),
+        'HOST': os.getenv('DB_HOST', "ec2-34-197-91-131.compute-1.amazonaws.com"),
+        'PORT': os.getenv('DB_HOST', "5432"),
+    }
+}
+
+db_from_env = dj_database_url.config(conn_max_age=600,)
+
+DATABASES['default'].update(db_from_env)
 
 
 # Password validation
