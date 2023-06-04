@@ -23,7 +23,8 @@ from django.urls import path, include
 
 urlpatterns = [
     path('adminqodirov/', admin.site.urls),
-    path('api/v1/', include("api.v1.urls"))
+    path('api/v1/', include("api.v1.urls")),
+    path('dashboard/v1/', include("dashboard.v1.urls")),
 ]+ static(settings.MEDIA_URL,    document_root=settings.MEDIA_ROOT)
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

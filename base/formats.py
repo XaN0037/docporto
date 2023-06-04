@@ -66,3 +66,33 @@ def new_format_all(data,lan):
         ("date", data.date)
 
     ])
+
+
+
+def patient_format_all(data):
+    return OrderedDict([
+        ("Id", data.id),
+        ("name", data.name),
+        ("first_name", data.first_name),
+        ("father_name", data.father_name),
+        ("age", data.age),
+        ("phone", data.phone),
+        ("date", data.date)
+
+    ])
+
+
+def patient_format_one(data):
+    return OrderedDict([
+        ("Id", data.id),
+        ("name", data.name),
+        ("first_name", data.first_name),
+        ("father_name", data.father_name),
+        ("age", data.age),
+        ("phone", data.phone),
+        ("diagnoz", data.diagnoz),
+        ("recommendation", data.recommendation),
+        ("comment", data.comment),
+        ("date", data.date)
+
+    ])
