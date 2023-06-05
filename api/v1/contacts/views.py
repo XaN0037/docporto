@@ -11,14 +11,14 @@ class ContactViews(GenericAPIView):
     serializer_class = ContactSerializer
     permission_classes = (AllowAny,)
 
-    # def post(self, requests, *args, **kwargs):
-    #     if Contact.objects.all():
-    #         return Response(MESSAGE["Contactsadderror"])
-    #     serializer = self.get_serializer(data=requests.data)
-    #     serializer.is_valid(raise_exception=True)
-    #     root = serializer.save()
-    #
-    #     return Response(contact_format(root))
+    def post(self, requests, *args, **kwargs):
+        if Contact.objects.all():
+            return Response(MESSAGE["Contactsadderror"])
+        serializer = self.get_serializer(data=requests.data)
+        serializer.is_valid(raise_exception=True)
+        root = serializer.save()
+
+        return Response(contact_format(root))
 
     def get(self, requests,*args, **kwargs):
         data = requests.query_params
@@ -27,24 +27,24 @@ class ContactViews(GenericAPIView):
             return Response(MESSAGE['NotData'])
         return Response({"data": contact_format(contacts,"uz" if not data.get('lan') else data.get('lan'))})
 
-    # def put(self, requests, pk, *args, **kwargs):
-    #     data = requests.data
-    #     contact = ''
-    #     try:
-    #         contact = Contact.objects.get(pk=pk)
-    #         serializer = self.get_serializer(data=data, instance=contact, partial=True)
-    #         serializer.is_valid(raise_exception=True)
-    #         root = serializer.save()
-    #         return Response(contact_format(root))
-    #
-    #     except:
-    #         return Response(MESSAGE["Contactsdeleteerror"])
+    def put(self, requests, pk, *args, **kwargs):
+        data = requests.data
+        contact = ''
+        try:
+            contact = Contact.objects.get(pk=pk)
+            serializer = self.get_serializer(data=data, instance=contact, partial=True)
+            serializer.is_valid(raise_exception=True)
+            root = serializer.save()
+            return Response(contact_format(root))
 
-    # def delete(self, requests, pk, *args, **kwargs):
-    #     try:
-    #         root = Contact.objects.get(pk=pk)
-    #         result = MESSAGE["Contactsdelet"]
-    #         root.delete()
-    #         return Response(result)
-    #     except:
-    #         return Response(MESSAGE["Contactsdeleteerror"])
+        except:
+            return Response(MESSAGE["Contactsdeleteerror"])
+
+    def delete(self, requests, pk, *args, **kwargs):
+        try:
+            root = Contact.objects.get(pk=pk)
+            result = MESSAGE["Contactsdelet"]
+            root.delete()
+            return Response(result)
+        except:
+            return Response(MESSAGE["Contactsdeleteerror"])

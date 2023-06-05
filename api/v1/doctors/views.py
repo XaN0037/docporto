@@ -12,12 +12,12 @@ class DoctorViews(GenericAPIView):
     serializer_class = DoctorSerializer
     permission_classes = (AllowAny,)
 
-    # def post(self, requests, *args, **kwargs):
-    #     serializer = self.get_serializer(data=requests.data)
-    #     serializer.is_valid(raise_exception=True)
-    #     root = serializer.save()
-    #
-    #     return Response(doctor_format(root))
+    def post(self, requests, *args, **kwargs):
+        serializer = self.get_serializer(data=requests.data)
+        serializer.is_valid(raise_exception=True)
+        root = serializer.save()
+
+        return Response(doctor_format(root))
 
     def get(self, requests, *args, **kwargs):
         data = requests.query_params
@@ -27,23 +27,23 @@ class DoctorViews(GenericAPIView):
             return Response(MESSAGE['NotData'])
         return Response({"data": [doctor_format(i, 'uz' if not data.get('lan') else data.get('lan')) for i in doctors]})
     #
-    # def put(self, requests, *args, **kwargs):
-    #     data = requests.query_params
-    #     doctor = ''
-    #     try:
-    #         doctor = Doctor.objects.get(pk=requests.query_params('pk'))
-    #         serializer = self.get_serializer(data=data, instance=doctor, partial=True)
-    #         serializer.is_valid(raise_exception=True)
-    #         root = serializer.save()
-    #         return Response(doctor_format(root))
-    #
-    #     except:
-    #         return Response(MESSAGE["DoctorNotFound"])
-    #
-    # def delete(self, requests, *args, **kwargs):
-    #     try:
-    #         root = Doctor.objects.get(pk=requests.query_params('pk'))
-    #         root.delete()
-    #         return Response(MESSAGE[f"Doctordelet"])
-    #     except:
-    #         return Response(MESSAGE["Doctordeleteerror"])
+    def put(self, requests, *args, **kwargs):
+        data = requests.query_params
+        doctor = ''
+        try:
+            doctor = Doctor.objects.get(pk=requests.query_params('pk'))
+            serializer = self.get_serializer(data=data, instance=doctor, partial=True)
+            serializer.is_valid(raise_exception=True)
+            root = serializer.save()
+            return Response(doctor_format(root))
+
+        except:
+            return Response(MESSAGE["DoctorNotFound"])
+
+    def delete(self, requests, *args, **kwargs):
+        try:
+            root = Doctor.objects.get(pk=requests.query_params('pk'))
+            root.delete()
+            return Response(MESSAGE[f"Doctordelet"])
+        except:
+            return Response(MESSAGE["Doctordeleteerror"])

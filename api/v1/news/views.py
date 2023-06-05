@@ -22,21 +22,19 @@ class NewViews(GenericAPIView):
 
     def get(self, requests, *args, **kwargs):
         data = requests.query_params
-        pk = data.get("pk")
-        lan = data.get("lan")
-        if not pk:
+        if not requests.query_params.get('pk'):
             news = ''
             try:
-                news = [new_format(i, "uz" if not lan else lan) for i in New.objects.all()]
+                news = [new_format(i, "uz" if not requests.query_params.get('lan') else requests.query_params.get('lan')) for i in New.objects.all()]
             except:
-                news = "Yangilik topilmadi"
+                news = MESSAGE['NewGetError']
             return Response({"data": news})
 
-        if pk:
+        if requests.query_params.get('pk'):
             try:
-                new = new_format_all(New.objects.filter(pk=pk).first(), "uz" if not lan else lan)
+                new = new_format_all(New.objects.filter(pk=requests.query_params.get('pk')).first(), "uz" if not requests.query_params.get('lan') else requests.query_params.get('lan'))
             except:
-                new = "Bu id da yangilik topilmadi"
+                new = MESSAGE['NewGetIdError']
             return Response({"data": new})
 
     # def put(self,requests, pk=None, *args, **kwargs):

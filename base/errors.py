@@ -79,5 +79,17 @@ MESSAGE = {
         "en": "no New",
     },
 
+"NewGetError": {
+        "uz": "Yangilik topilmadi",
+        "ru": "davno net",
+        "en": "no New",
+    },
+
+"NewGetIdError": {
+        "uz": "Bu id da malumot yo'q topilmadi",
+        "ru": "davno net",
+        "en": "no New",
+    },
+
 
 }
