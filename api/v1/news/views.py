@@ -1,3 +1,4 @@
+from django.core.paginator import Paginator
 from rest_framework.generics import GenericAPIView
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
@@ -5,14 +6,7 @@ from rest_framework.response import Response
 from api.models import New
 from base.errors import MESSAGE
 from base.formats import new_format_all, new_format
-
-
-#
-# img = models.ImageField("Yangilikga oid rasm")
-# title = models.CharField('Yangilikning Sarlavha', max_length=512)
-# short_desc = models.TextField("Yangilikning Qisqa ma'lumoti")
-# desc = models.TextField("Yangilikning To'liq ma'lumoti")
-# date = models.DateField("Yangilikni saytga joylash vaqti", auto_now_add=True)
+from src import settings
 
 
 class NewViews(GenericAPIView):
@@ -21,21 +15,21 @@ class NewViews(GenericAPIView):
     #     pass
 
     def get(self, requests, *args, **kwargs):
-        data = requests.query_params
-        if not requests.query_params.get('pk'):
-            news = ''
-            try:
-                news = [new_format(i, "uz" if not requests.query_params.get('lan') else requests.query_params.get('lan')) for i in New.objects.all()]
-            except:
-                news = MESSAGE['NewGetError']
-            return Response({"data": news})
-
         if requests.query_params.get('pk'):
             try:
-                new = new_format_all(New.objects.filter(pk=requests.query_params.get('pk')).first(), "uz" if not requests.query_params.get('lan') else requests.query_params.get('lan'))
+                return Response({"data": new_format_all(New.objects.filter(pk=requests.query_params.get('pk')).first(),
+                                                        "uz" if not requests.query_params.get(
+                                                            'lan') else requests.query_params.get('lan'))})
             except:
-                new = MESSAGE['NewGetIdError']
-            return Response({"data": new})
+                return Response({MESSAGE['NewGetIdError']})
+            
+        try:
+            return Response({"data": [
+                new_format(i, "uz" if not requests.query_params.get('lan') else requests.query_params.get('lan')) for
+                i in Paginator(New.objects.all().order_by('-pk'), settings.PAGINATE_BY).get_page(
+                    requests.GET.get("page", 1))]})
+        except:
+            return Response({MESSAGE['NewGetError']})
 
     # def put(self,requests, pk=None, *args, **kwargs):
     #     data = requests.data
