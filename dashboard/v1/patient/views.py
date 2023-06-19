@@ -35,14 +35,13 @@ class PatientViews(GenericAPIView):
         patient = ''
         try:
             patient = Patient.objects.get(pk=requests.query_params.get('pk'))
-            print(patient_format_all(patient))
             serializer = self.get_serializer(data=requests.query_params, instance=patient, partial=True)
             serializer.is_valid(raise_exception=True)
             root = serializer.save()
             return Response(patient_format_one(root))
 
         except:
-            return Response(MESSAGE["DoctorNotFound"])
+            return Response(MESSAGE["PatientNotFound"])
 
     def delete(self, requests, *args, **kwargs):
         try:

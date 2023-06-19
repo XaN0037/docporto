@@ -92,4 +92,10 @@ MESSAGE = {
     },
 
 
+"PatientNotFound": {
+    "uz": "Bunday Id da kasal malumotlari topilmadi",
+    "ru": "Таких karoche не найдено",
+    "en": "No such kasalda karoche was found",
+    },
+
 }

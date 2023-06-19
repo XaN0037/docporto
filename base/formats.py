@@ -96,3 +96,22 @@ def patient_format_one(data):
         ("date", data.date)
 
     ])
+
+
+
+def retsep_format_one(data):
+    return OrderedDict([
+        ("Id", data.id),
+        ("name", data.name),
+        ("info", data.info),
+
+    ])
+
+
+def retsep_format_all(data):
+    return OrderedDict([
+        ("Id", data.id),
+        ("name", data.name),
+
+
+    ])
