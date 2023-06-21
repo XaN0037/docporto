@@ -20,7 +20,7 @@ class PatientViews(GenericAPIView):
         return Response(patient_format_all(root))
 
     def get(self, requests, *args, **kwargs):
-        if not requests.query_params('pk'):
+        if not requests.query_params.get('pk'):
             patients = Patient.objects.all()
             if not patients:
                 return Response(MESSAGE['NotData'])

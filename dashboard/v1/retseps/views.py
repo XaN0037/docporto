@@ -20,7 +20,7 @@ class RetsepViews(GenericAPIView):
         return Response(retsep_format_one(root))
 
     def get(self, requests, *args, **kwargs):
-        if not requests.query_params('pk'):
+        if not requests.query_params.get('pk'):
             retseps = Retsep.objects.all()
             if not retseps:
                 return Response(MESSAGE['NotData'])
@@ -35,7 +35,6 @@ class RetsepViews(GenericAPIView):
         patient = ''
         try:
             retsep = Retsep.objects.get(pk=requests.query_params.get('pk'))
-            print(retsep_format_all(patient))
             serializer = self.get_serializer(data=requests.query_params, instance=retsep, partial=True)
             serializer.is_valid(raise_exception=True)
             root = serializer.save()

@@ -3,9 +3,10 @@ from collections import OrderedDict
 from api.models.news import *
 from api.models.contact import *
 from api.models.doctors import *
+from dashboard.models import Files
 
 
-def contact_format(data,lan):
+def contact_format(data,lan='uz'):
     return OrderedDict([
         ("Id", data.id),
 
@@ -83,6 +84,9 @@ def patient_format_all(data):
 
 
 def patient_format_one(data):
+    files=[]
+    for i in Files.objects.filter(pk=data.id):
+        files.append(i)
     return OrderedDict([
         ("Id", data.id),
         ("name", data.name),
@@ -90,8 +94,8 @@ def patient_format_one(data):
         ("father_name", data.father_name),
         ("age", data.age),
         ("phone", data.phone),
-        ("diagnoz", data.diagnoz),
-        ("recommendation", data.recommendation),
+        # ("diagnoz", data.diagnoz),
+        # ("recommendation", data.recommendation),
         ("comment", data.comment),
         ("date", data.date)
 
