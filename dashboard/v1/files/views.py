@@ -37,7 +37,6 @@ class FileViews(GenericAPIView):
             return Response({"data": file_format(file)})
 
     def put(self, requests, *args, **kwargs):
-        file = ''
         try:
             file = Files.objects.get(pk=requests.query_params.get('pk'))
             serializer = self.get_serializer(data=requests.query_params, instance=file, partial=True)

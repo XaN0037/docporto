@@ -7,13 +7,14 @@ class Patient(models.Model):
     father_name = models.CharField('Otasining ismi', max_length=128)
     age = models.CharField('Bemorning tug\'ilgan yili', max_length=4)
     phone = models.CharField('Bemorning telefon raqami', max_length=16)
-    date = models.DateField(auto_now=True)
     """Comment faqat bazaga yoziladi, qog'ozda chiqarilmaydi"""
     comment = models.TextField("Izox")
 
 
     def __str__(self):
         return f"{self.name} {self.first_name}"
+
+
 
 
 class Files(models.Model):
@@ -30,9 +31,17 @@ class Diagnoz(models.Model):
     recommendation = models.TextField('Tavsiya')
     """Comment faqat bazaga yoziladi, qog'ozda chiqarilmaydi"""
     comment = models.TextField("Izox")
+    date = models.DateField(auto_now=True)
+    image_one = models.ImageField('Birinchi rasm')
+    image_two = models.ImageField('Ikkinchi rasm')
 
     def __str__(self):
         return f"{self.patient}{self.diagnoz}"
+
+
+
+
+
 
 
 # class Recommendation(models.Model):

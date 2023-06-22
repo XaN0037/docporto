@@ -77,7 +77,6 @@ def patient_format_all(data):
         ("father_name", data.father_name),
         ("age", data.age),
         ("phone", data.phone),
-        ("date", data.date)
 
     ])
 
@@ -104,17 +103,34 @@ def patient_format_one(data):
         ("age", data.age),
         ("phone", data.phone),
         ("comment", data.comment),
-        ("date", data.date),
         ("files", files),
 
     ])
 
 
 def diagnoz_format_one(data):
+
+
     return OrderedDict([
         ("Id", data.id),
-        ("name", data.name),
-        ("name", data.name),
+        ("diagnoz", data.diagnoz),
+        ("recommendation", data.recommendation),
+        ("comment", data.comment),
+        ("date", data.date),
+        ("img_one", data.image_one.url),
+        ("img_two", data.image_two.url),
+
+    ])
+
+
+def diagnoz_format_all(data):
+
+
+    return OrderedDict([
+        ("Id", data.id),
+        ("diagnoz", data.diagnoz),
+        ("date", data.date),
+        ("patient", data.patient_id),
 
     ])
 

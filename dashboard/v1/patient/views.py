@@ -20,28 +20,27 @@ class PatientViews(GenericAPIView):
         return Response(patient_format_all(root))
 
     def get(self, requests, *args, **kwargs):
-        if not requests.query_params.get('pk'):
-            patients = Patient.objects.all()
-            if not patients:
-                return Response(MESSAGE['NotData'])
-            return Response({"data": [patient_format_all(i) for i in patients]})
         if requests.query_params.get('pk'):
-            patient = Patient.objects.filter(pk=requests.query_params.get('pk')).first()
-            if not patient:
+            try:
+                return Response(
+                    {"data": patient_format_one(Patient.objects.filter(pk=requests.query_params.get('pk')).first())})
+            except:
                 return Response(MESSAGE['NotData'])
-            return Response({"data": patient_format_one(patient)})
+        if not requests.query_params.get('pk'):
+            try:
+                return Response({"data": [patient_format_all(i) for i in Patient.objects.all()]})
+            except:
+                return Response(MESSAGE['NotData'])
 
     def put(self, requests, *args, **kwargs):
-        patient = ''
-        if requests.query_params.get('pk'):
+        try:
             patient = Patient.objects.get(pk=requests.query_params.get('pk'))
             serializer = self.get_serializer(data=requests.query_params, instance=patient, partial=True)
             serializer.is_valid(raise_exception=True)
             root = serializer.save()
             return Response(patient_format_one(root))
-        else:
+        except:
             return Response(MESSAGE["Doctordeleteerror"])
-
 
     def delete(self, requests, *args, **kwargs):
         try:
