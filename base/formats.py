@@ -1,12 +1,10 @@
 from collections import OrderedDict
 
-from api.models.news import *
-from api.models.contact import *
-from api.models.doctors import *
+
 from dashboard.models import Files
 
 
-def contact_format(data, lan='uz'):
+def contact_format(data, lan):
     return OrderedDict([
         ("Id", data.id),
 

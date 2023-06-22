@@ -15,6 +15,4 @@ urlpatterns = [
 
     path('diagnoz/', DiagnozViews.as_view()),
 
-
-
 ]
