@@ -17,7 +17,6 @@ import dj_database_url
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
@@ -29,7 +28,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -39,8 +37,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
-
 
     "corsheaders",
     "api",
@@ -65,7 +61,7 @@ ROOT_URLCONF = 'src.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR,'templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -80,30 +76,30 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'src.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
-
-
-#
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'django.db.backends.' + os.getenv('DB_ENGINE', "postgresql_psycopg2"),
-#         'NAME': os.getenv('DB_NAME', "d8h18odtp96rn6"),
-#         'USER': os.getenv('DB_USER', "cowcpqpjxqprvo"),
-#         'PASSWORD': os.getenv('PASS', "80ca2328b848b1fd16815fbf05e48ef6b75a79492bda8d3ceaa3218129d26e63"),
-#         'HOST': os.getenv('DB_HOST', "ec2-34-197-91-131.compute-1.amazonaws.com"),
-#         'PORT': os.getenv('DB_HOST', "5432"),
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
+#
 # #
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'xanuz1_mysql_db',
+        'USER': 'xanuz1_db_admin',
+        'PASSWORD': 'DB_admin0037#',
+        'HOST': '127.0.0.1',
+        'PORT': '3306',
+        'OPTIONS': {
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
+        }
+    }
+}
 # db_from_env = dj_database_url.config(conn_max_age=600,)
 #
 # # DATABASES['default'].update(db_from_env)
@@ -127,7 +123,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
@@ -138,7 +133,6 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
@@ -157,6 +151,5 @@ MEDIA_URL = "media/"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
 
 PAGINATE_BY = 20

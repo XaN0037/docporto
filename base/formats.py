@@ -122,8 +122,6 @@ def diagnoz_format_one(data):
 
 
 def diagnoz_format_all(data):
-
-
     return OrderedDict([
         ("Id", data.id),
         ("diagnoz", data.diagnoz),
@@ -138,8 +136,6 @@ def retsep_format_one(data):
         ("Id", data.id),
         ("name", data.name),
         ("info", data.info),
-
-
     ])
 
 
