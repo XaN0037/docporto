@@ -1,3 +1,5 @@
+from django.conf import settings
+from django.core.paginator import Paginator
 from rest_framework.generics import GenericAPIView
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
@@ -28,7 +30,10 @@ class PatientViews(GenericAPIView):
                 return Response(MESSAGE['NotData'])
         if not requests.query_params.get('pk'):
             try:
-                return Response({"data": [patient_format_all(i) for i in Patient.objects.all()]})
+                pagination = Patient.objects.all().order_by('-pk')
+                paginator = Paginator(pagination, settings.PAGINATE_BY)
+                page_number = requests.query_params.get("page", 1)
+                return Response(patient_format_all(x) for x in paginator.get_page(page_number))
             except:
                 return Response(MESSAGE['NotData'])
 
