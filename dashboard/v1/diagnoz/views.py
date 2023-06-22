@@ -1,3 +1,4 @@
+from django.core.paginator import Paginator
 from rest_framework.generics import GenericAPIView
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
@@ -6,6 +7,7 @@ from base.formats import diagnoz_format_one, diagnoz_format_all
 from base.errors import *
 from dashboard.models import Diagnoz
 from dashboard.v1.diagnoz.serializer import DiagnozSerializer
+from src import settings
 
 
 class DiagnozViews(GenericAPIView):
@@ -28,7 +30,10 @@ class DiagnozViews(GenericAPIView):
                 return Response(MESSAGE['NotData'])
         if not requests.query_params.get('pk'):
             try:
-                return Response({"data": [diagnoz_format_all(i) for i in Diagnoz.objects.all()]})
+                pagination = Diagnoz.objects.all().order_by('-pk')
+                paginator = Paginator(pagination, settings.PAGINATE_BY)
+                page_number = requests.query_params.get("page", 1)
+                return Response(diagnoz_format_all(x) for x in paginator.get_page(page_number))
             except:
                 return Response(MESSAGE['NotData'])
 

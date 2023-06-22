@@ -28,7 +28,7 @@ class RetsepViews(GenericAPIView):
                 return Response(MESSAGE['NotData'])
         if not requests.query_params.get('pk'):
             try:
-                return Response({"data": [retsep_format_all(i) for i in Retsep.objects.all()]})
+                return Response({"data": [retsep_format_all(i) for i in Retsep.objects.all().order_by("-pk")]})
             except:
                 return Response(MESSAGE['NotData'])
 
