@@ -54,6 +54,11 @@ MESSAGE = {
         "ru": "delete",
         "en": "delete",
     },
+"Retsepdelet": {
+        "uz": "retsep o'chirildi",
+        "ru": "delete",
+        "en": "delete",
+    },
 
 "Contactsdeleteerror": {
         "uz": "Sizda contact mavjud emas",
@@ -71,6 +76,11 @@ MESSAGE = {
         "uz": "Sizda doctor mavjud emas",
         "ru": "davno net",
         "en": "no contact",
+    },
+"Rertsepdeleteerror": {
+        "uz": "Sizda retsep mavjud emas",
+        "ru": "davno net",
+        "en": "no retsep",
     },
 
 "NewPutError": {

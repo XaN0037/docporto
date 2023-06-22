@@ -6,7 +6,7 @@ from api.models.doctors import *
 from dashboard.models import Files
 
 
-def contact_format(data,lan='uz'):
+def contact_format(data, lan='uz'):
     return OrderedDict([
         ("Id", data.id),
 
@@ -47,7 +47,7 @@ def doctor_format(data, lan="uz"):
     ])
 
 
-def new_format(data,lan):
+def new_format(data, lan):
     return OrderedDict([
         ("Id", data.id),
         ("img", data.img.url),
@@ -57,7 +57,7 @@ def new_format(data,lan):
     ])
 
 
-def new_format_all(data,lan):
+def new_format_all(data, lan):
     return OrderedDict([
         ("Id", data.id),
         ("img", data.img.url),
@@ -67,7 +67,6 @@ def new_format_all(data,lan):
         ("date", data.date)
 
     ])
-
 
 
 def patient_format_all(data):
@@ -83,10 +82,20 @@ def patient_format_all(data):
     ])
 
 
+def file_format(data):
+    return OrderedDict([
+        ("Id", data.id),
+        ("url", data.file.url),
+        ("patient_id", data.patient_id),
+    ])
+
+
 def patient_format_one(data):
-    files=[]
-    for i in Files.objects.filter(pk=data.id):
-        files.append(i)
+    try:
+        files = [x.file.url for x in Files.objects.filter(patient_id=data.id)]
+    except:
+        files = None
+
     return OrderedDict([
         ("Id", data.id),
         ("name", data.name),
@@ -94,13 +103,20 @@ def patient_format_one(data):
         ("father_name", data.father_name),
         ("age", data.age),
         ("phone", data.phone),
-        # ("diagnoz", data.diagnoz),
-        # ("recommendation", data.recommendation),
         ("comment", data.comment),
-        ("date", data.date)
+        ("date", data.date),
+        ("files", files),
 
     ])
 
+
+def diagnoz_format_one(data):
+    return OrderedDict([
+        ("Id", data.id),
+        ("name", data.name),
+        ("name", data.name),
+
+    ])
 
 
 def retsep_format_one(data):
@@ -108,6 +124,7 @@ def retsep_format_one(data):
         ("Id", data.id),
         ("name", data.name),
         ("info", data.info),
+
 
     ])
 

@@ -12,4 +12,6 @@ urlpatterns = [
 
     path("new/", NewViews.as_view()),
 
+
+
 ]

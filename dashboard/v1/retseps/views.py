@@ -20,16 +20,20 @@ class RetsepViews(GenericAPIView):
         return Response(retsep_format_one(root))
 
     def get(self, requests, *args, **kwargs):
-        if not requests.query_params.get('pk'):
-            retseps = Retsep.objects.all()
-            if not retseps:
-                return Response(MESSAGE['NotData'])
-            return Response({"data": [retsep_format_all(i) for i in retseps]})
+
         if requests.query_params.get('pk'):
-            patient = Retsep.objects.filter(pk=requests.query_params.get('pk')).first()
-            if not patient:
+            try:
+                return Response({"data": retsep_format_one(Retsep.objects.filter(pk=requests.query_params.get('pk')).first())})
+            except:
                 return Response(MESSAGE['NotData'])
-            return Response({"data": retsep_format_one(patient)})
+
+        if not requests.query_params.get('pk'):
+            try:
+                return Response({"data": [retsep_format_all(i) for i in Retsep.objects.all()]})
+            except:
+                return Response(MESSAGE['NotData'])
+
+        
 
     def put(self, requests, *args, **kwargs):
         patient = ''
@@ -41,12 +45,12 @@ class RetsepViews(GenericAPIView):
             return Response(retsep_format_one(root))
 
         except:
-            return Response(MESSAGE["DoctorNotFound"])
+            return Response(MESSAGE["NotData"])
 
     def delete(self, requests, *args, **kwargs):
         try:
             root = Retsep.objects.get(pk=requests.query_params.get('pk'))
             root.delete()
-            return Response(MESSAGE[f"Doctordelet"])
+            return Response(MESSAGE[f"Retsepdelet"])
         except:
-            return Response(MESSAGE["Doctordeleteerror"])
+            return Response(MESSAGE["Rertsepdeleteerror"])
