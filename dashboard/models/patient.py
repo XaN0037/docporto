@@ -1,6 +1,7 @@
 from django.db import models
 
 
+
 class Patient(models.Model):
     name = models.CharField('Bemorning Ismi', max_length=128)
     first_name = models.CharField('Bemorning Familiyasi', max_length=128)
@@ -17,9 +18,10 @@ class Patient(models.Model):
 
 
 
+
 class Files(models.Model):
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
-    file = models.FileField(upload_to='document_patient')
+    file = models.FileField(upload_to='document_patient/')
 
     def __str__(self):
         return f"{self.patient.name}"
@@ -39,11 +41,3 @@ class Diagnoz(models.Model):
         return f"{self.patient}{self.diagnoz}"
 
 
-
-
-
-
-
-# class Recommendation(models.Model):
-#     diagnoz = models.ForeignKey(Diagnoz, on_delete=models.CASCADE)
-#

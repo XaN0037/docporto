@@ -20,14 +20,12 @@ class RetsepViews(GenericAPIView):
         return Response(retsep_format_one(root))
 
     def get(self, requests, *args, **kwargs):
-
         if requests.query_params.get('pk'):
             try:
                 return Response(
                     {"data": retsep_format_one(Retsep.objects.filter(pk=requests.query_params.get('pk')).first())})
             except:
                 return Response(MESSAGE['NotData'])
-
         if not requests.query_params.get('pk'):
             try:
                 return Response({"data": [retsep_format_all(i) for i in Retsep.objects.all()]})
@@ -41,7 +39,6 @@ class RetsepViews(GenericAPIView):
             serializer.is_valid(raise_exception=True)
             root = serializer.save()
             return Response(retsep_format_one(root))
-
         except:
             return Response(MESSAGE["NotData"])
 
