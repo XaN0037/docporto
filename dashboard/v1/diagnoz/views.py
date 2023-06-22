@@ -32,22 +32,21 @@ class DiagnozViews(GenericAPIView):
             except:
                 return Response(MESSAGE['NotData'])
 
-    # def put(self, requests, *args, **kwargs):
-    #     patient = ''
-    #     try:
-    #         patient = Patient.objects.get(pk=requests.query_params.get('pk'))
-    #         serializer = self.get_serializer(data=requests.query_params, instance=patient, partial=True)
-    #         serializer.is_valid(raise_exception=True)
-    #         root = serializer.save()
-    #         return Response(patient_format_one(root))
-    #
-    #     except:
-    #         return Response(MESSAGE["PatientNotFound"])
-    #
-    # def delete(self, requests, *args, **kwargs):
-    #     try:
-    #         root = Patient.objects.get(pk=requests.query_params.get('pk'))
-    #         root.delete()
-    #         return Response(MESSAGE[f"Doctordelet"])
-    #     except:
-    #         return Response(MESSAGE["Doctordeleteerror"])
+    def put(self, requests, *args, **kwargs):
+        try:
+            patient = Diagnoz.objects.get(pk=requests.query_params.get('pk'))
+            serializer = self.get_serializer(data=requests.query_params, instance=patient, partial=True)
+            serializer.is_valid(raise_exception=True)
+            root = serializer.save()
+            return Response(diagnoz_format_one(root))
+
+        except:
+            return Response(MESSAGE["PatientNotFound"])
+
+    def delete(self, requests, *args, **kwargs):
+        try:
+            root = Diagnoz.objects.get(pk=requests.query_params.get('pk'))
+            root.delete()
+            return Response(MESSAGE[f"Doctordelet"])
+        except:
+            return Response(MESSAGE["Doctordeleteerror"])
