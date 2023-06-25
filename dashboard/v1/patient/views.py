@@ -27,7 +27,7 @@ class PatientViews(GenericAPIView):
                 return Response(
                     {"data": patient_format_one(Patient.objects.filter(pk=requests.query_params.get('pk')).first())})
             except:
-                return Response(MESSAGE['NotData'])
+                return Response(MESSAGE['NotData'], status=404)
         if not requests.query_params.get('pk'):
             try:
                 pagination = Patient.objects.all().order_by('-pk')
@@ -35,17 +35,25 @@ class PatientViews(GenericAPIView):
                 page_number = requests.query_params.get("page", 1)
                 return Response(patient_format_all(x) for x in paginator.get_page(page_number))
             except:
-                return Response(MESSAGE['NotData'])
+                return Response(MESSAGE['NotData'], status=404)
 
-    def put(self, requests, *args, **kwargs):
+    def put(self, request, pk, *args, **kwargs):
+        data = request.data
         try:
-            patient = Patient.objects.get(pk=requests.query_params.get('pk'))
-            serializer = self.get_serializer(data=requests.query_params, instance=patient, partial=True)
-            serializer.is_valid(raise_exception=True)
-            root = serializer.save()
-            return Response(patient_format_one(root))
+            patient = Patient.objects.get(pk=pk)
         except:
-            return Response(MESSAGE["Doctordeleteerror"])
+            return Response(MESSAGE['NotData'], status=404)
+
+        patient.name = data.get('name', patient.name)
+        patient.first_name = data.get('first_name', patient.first_name)
+        patient.father_name = data.get('father_name', patient.father_name)
+        patient.age = data.get('age', patient.age)
+        patient.phone = data.get('phone', patient.phone)
+        patient.comment = data.get('comment', patient.comment)
+
+        patient.save()
+
+        return Response(patient_format_one(patient))
 
     def delete(self, requests, *args, **kwargs):
         try:
@@ -53,4 +61,4 @@ class PatientViews(GenericAPIView):
             root.delete()
             return Response(MESSAGE[f"Doctordelet"])
         except:
-            return Response(MESSAGE["Doctordeleteerror"])
+            return Response(MESSAGE["Doctordeleteerror"], status=404)

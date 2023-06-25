@@ -117,6 +117,7 @@ def diagnoz_format_one(data):
         ("date", data.date),
         ("img_one", data.image_one.url),
         ("img_two", data.image_two.url),
+        ("patient", data.patient.name),
 
     ])
 

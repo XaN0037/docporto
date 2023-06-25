@@ -37,16 +37,16 @@ class DiagnozViews(GenericAPIView):
             except:
                 return Response(MESSAGE['NotData'])
 
-    def put(self, requests, *args, **kwargs):
-        try:
-            patient = Diagnoz.objects.get(pk=requests.query_params.get('pk'))
-            serializer = self.get_serializer(data=requests.query_params, instance=patient, partial=True)
-            serializer.is_valid(raise_exception=True)
-            root = serializer.save()
-            return Response(diagnoz_format_one(root))
-
-        except:
-            return Response(MESSAGE["PatientNotFound"])
+    # def put(self, requests, *args, **kwargs):
+    #     try:
+    #         patient = Diagnoz.objects.get(pk=requests.query_params.get('pk'))
+    #         serializer = self.get_serializer(data=requests.query_params, instance=patient, partial=True)
+    #         serializer.is_valid(raise_exception=True)
+    #         root = serializer.save()
+    #         return Response(diagnoz_format_one(root))
+    #
+    #     except:
+    #         return Response(MESSAGE["PatientNotFound"])
 
     def delete(self, requests, *args, **kwargs):
         try:
@@ -55,3 +55,26 @@ class DiagnozViews(GenericAPIView):
             return Response(MESSAGE[f"Doctordelet"])
         except:
             return Response(MESSAGE["Doctordeleteerror"])
+
+
+
+
+
+
+    def put(self, request, pk, *args, **kwargs):
+        data = request.data
+        try:
+            diagnoz = Diagnoz.objects.get(pk=pk)
+        except:
+            return Response(MESSAGE['NotData'], status=404)
+
+        # diagnoz.diagnoz = data.get('name', diagnoz.name)
+        diagnoz.diagnoz = data.get('diagnoz', diagnoz.diagnoz)
+        diagnoz.recommendation = data.get('recommendation', diagnoz.recommendation)
+        diagnoz.comment = data.get('comment', diagnoz.comment)
+        diagnoz.image_one = data.get('image_one', diagnoz.image_one)
+        diagnoz.image_two = data.get('image_two', diagnoz.image_two)
+
+        diagnoz.save()
+
+        return Response(diagnoz_format_one(diagnoz))

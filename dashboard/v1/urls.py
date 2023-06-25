@@ -9,10 +9,13 @@ urlpatterns = [
 
     path("patient/", PatientViews.as_view()),
 
+    path("patient/<int:pk>/", PatientViews.as_view()),
+
     path('files/', FileViews.as_view()),
 
     path('retsep/', RetsepViews.as_view()),
 
     path('diagnoz/', DiagnozViews.as_view()),
+    path("diagnoz/<int:pk>/", DiagnozViews.as_view()),
 
 ]

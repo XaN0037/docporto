@@ -2,6 +2,11 @@
 
 
 MESSAGE = {
+"NotData": {
+        'uz': "Ma'lumot topilmadi",
+        'en': "Patient not found",
+        "ru": "Информация не найдена"
+    },
 
 "NotData": {
         'uz': "Ma'lumot topilmadi",
